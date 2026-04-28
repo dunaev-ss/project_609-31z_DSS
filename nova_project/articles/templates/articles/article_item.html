@@ -1,0 +1,16 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% block title %}{{ article.title }}{% endblock title %}
+{% block content %}
+<div>
+    <img src="{{ article.thumbnail.url }}" alt="">
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.body }}</p>
+    {% if user.is_authenticated and user.id == article.author.id %}
+    <div>
+        <a href="{% url 'articles:update' slug=article.slug %}">Update</a>
+        <a href="{% url 'articles:delete' slug=article.slug %}">Delete</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
