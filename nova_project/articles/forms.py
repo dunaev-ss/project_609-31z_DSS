@@ -8,12 +8,12 @@ class ArticleForm(forms.ModelForm):
         model = models.Article
         fields = ['title', 'body', 'thumbnail']
         labels = {
-            "title": "Title",
-            "body": "text",
-            "thumbnail": "Thumbnail"
+            "title": "Заголовок",
+            "body": "Текст статьи",
+            "thumbnail": "Обложка"
         }
         widgets = {
-            "title": forms.TextInput(attrs={'placeholder': 'Write article title', 'class': 'form-control mb-3'}),
-            "body": forms.TextInput(attrs={'placeholder': 'Write article text', 'class': 'form-control mb-3'}),
+            "title": forms.TextInput(attrs={'placeholder': 'Введите заголовок статьи...', 'class': 'form-control mb-3'}),
+            "body": forms.TextInput(attrs={'placeholder': 'Введите текст статьи...', 'class': 'form-control mb-3'}),
             "thumbnail": forms.ClearableFileInput(attrs={'class': 'form-control mb-3'}),
         }

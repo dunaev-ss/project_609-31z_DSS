@@ -6,13 +6,13 @@ class Article(models.Model):
     slug = models.SlugField()
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    thumbnail = models.ImageField(upload_to='image/', blank=True, default='images/default.jpg')
+    thumbnail = models.ImageField(upload_to='image/', blank=True, default='image/default.jpg')
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
 
 
-def __str__(self):
-    return self.title
+    def __str__(self):
+        return self.title
 
 
-def snippet(self):
-    return self.body[0:50] + '...'
+    def snippet(self):
+        return self.body[0:50] + '...'

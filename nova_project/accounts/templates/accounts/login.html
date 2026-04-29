@@ -1,12 +1,18 @@
 {% extends "base_layout.html" %}
 {% block content %}
-<h1>Login</h1>
-<form action="{% url 'accounts:login' %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    {% if request.GET.next %}
-        <input type="hidden" name="next" value="{{ request.GET.next }}">
-    {% endif %}
-    <button type="submit">Login</button>
-</form>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <h1 class="text-center mb-4">Вход</h1>
+        <form class="d-grid gap-3" action="{% url 'accounts:login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-fields">
+                {{ form }}
+            </div>
+            {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% endif %}
+            <button class="btn btn-primary shadow-sm" type="submit">Войти</button>
+        </form>
+    </div>
+</div>
 {% endblock content %}
