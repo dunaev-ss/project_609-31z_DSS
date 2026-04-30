@@ -9,7 +9,11 @@ from .models import Article
 
 
 def article_list(request):
-    articles_all = Article.objects.all().order_by('-date')
+    query = request.GET.get('search')
+    if query:
+        articles_all = Article.objects.filter(title__iregex=query).order_by('-date')
+    else:
+        articles_all = Article.objects.all().order_by('-date')
     paginator = Paginator(articles_all, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

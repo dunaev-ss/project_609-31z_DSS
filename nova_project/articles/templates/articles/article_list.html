@@ -30,10 +30,10 @@
     <ul class="pagination justify-content-center">
         {% if articles.has_previous %}
         <li class="page-item">
-            <a class="page-link" href="?page=1">&laquo;</a>
+            <a class="page-link" href="?page=1&search={{ request.GET.search }}">&laquo;</a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="?page={{ articles.previous_page_number }}">Назад</a>
+            <a class="page-link" href="?page={{ articles.previous_page_number }}&search={{ request.GET.search }}">Назад</a>
         </li>
         {% endif %}
         <li class="page-item active">
@@ -41,10 +41,10 @@
         </li>
         {% if articles.has_next %}
         <li class="page-item">
-            <a class="page-link" href="?page={{ articles.next_page_number }}">Вперед</a>
+            <a class="page-link" href="?page={{ articles.next_page_number }}&search={{ request.GET.search }}">Вперед</a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="?page={{ articles.paginator.num_pages }}">&raquo;</a>
+            <a class="page-link" href="?page={{ articles.paginator.num_pages }}&search={{ request.GET.search }}">&raquo;</a>
         </li>
         {% endif %}
     </ul>
