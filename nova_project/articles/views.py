@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -8,8 +9,11 @@ from .models import Article
 
 
 def article_list(request):
-    articles = Article.objects.all().order_by('date')
-    return render(request, 'articles/article_list.html', {'articles': articles})
+    articles_all = Article.objects.all().order_by('-date')
+    paginator = Paginator(articles_all, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'articles/article_list.html', {'articles': page_obj})
 
 
 def article_item(request, slug):
