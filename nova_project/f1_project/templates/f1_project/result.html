@@ -7,58 +7,91 @@
     
     <form method="get" class="d-flex gap-2">
         <input type="number" name="season_year" class="form-control form-control-sm"
-               value="{{ season_year }}" min="1900" max="9999" style="width: 100px;">
+               value="{{ season_year }}" style="width: 86px;">
         <button type="submit" class="btn btn-primary btn-sm">Показать</button>
     </form>
 </div>
 
-<div class="table-responsive">
-    <table class="table table-hover align-middle">
+<div class="table-responsive border-0">
+    <table class="table table-hover table-sm table-nowrap align-middle small">
         <thead class="table-light">
-            <tr>
-                <th>Этап</th>
-                <th>Дата</th>
-                <th>Гран При</th>
-                <th>Победитель</th>
-                <th>Поул</th>
-                <th>Быстрый круг</th>
-                <th>Команда</th>
+            <tr class="text-uppercase text-muted" style="font-size: 0.7rem; letter-spacing: 0.5px;">
+                <th>#</th>
+                <th>
+                    <span class="d-none d-md-inline">Дата</span>
+                    <span class="d-inline d-md-none">Date</span>
+                </th>
+                <th>
+                    <span class="d-none d-md-inline">Гран При</span>
+                    <span class="d-inline d-md-none">GP</span>
+                </th>
+                <th>
+                    <span class="d-none d-md-inline">Победитель</span>
+                    <span class="d-inline d-md-none">WIN</span>
+                </th>
+                <th>
+                    <span class="d-none d-md-inline">Поул</span>
+                    <span class="d-inline d-md-none">PP</span>
+                </th>
+                <th>
+                    <span class="d-none d-md-inline">Быстрый круг</span>
+                    <span class="d-inline d-md-none">FL</span>
+                </th>
+                <th>
+                    <span class="d-none d-md-inline">Команда</span>
+                    <span class="d-inline d-md-none">Team</span>
+                </th>
             </tr>
         </thead>
         <tbody>
             {% for res in result %}
             <tr>
-                <td>{{ res.round }}</td>
+                <td class="text-muted fw-bold">{{ res.round }}</td>
                 <td>{{ res.date|date:"d.m.Y"|default:"—"}}</td>
                 <td>
-                    {% if res.gp_country_flag %}
-                        <img src="{{ res.gp_country_flag }}" class="flag-circle" alt="flag">
-                    {% endif %}
-                    {{ res.gp_name }}
+                    <div>
+                        {% if res.gp_country_flag %}
+                            <img src="{{ res.gp_country_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        {% endif %}
+                        <span class="d-none d-xxl-inline">{{ res.gp_name }}</span>
+                        <span class="d-inline d-xxl-none">{{ res.gp_abbr }}</span>
+                    </div>
                 </td>
                 <td>
-                    {% if res.winner_flag %}
-                        <img src="{{ res.winner_flag }}" class="flag-circle" alt="flag">
-                    {% endif %}
-                    {{ res.winner }}
+                    <div>
+                        {% if res.winner_flag %}
+                            <img src="{{ res.winner_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        {% endif %}
+                        <span class="d-none d-xxl-inline">{{ res.winner }}</span>
+                        <span class="d-inline d-xxl-none">{{ res.winner_abbr }}</span>
+                    </div>
                 </td>
                 <td>
-                    {% if res.pole_flag %}
-                        <img src="{{ res.pole_flag }}" class="flag-circle" alt="flag">
-                    {% endif %}
-                    {{ res.pole }}
+                    <div>
+                        {% if res.pole_flag %}
+                            <img src="{{ res.pole_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        {% endif %}
+                        <span class="d-none d-xxl-inline">{{ res.pole }}</span>
+                        <span class="d-inline d-xxl-none">{{ res.pole_abbr }}</span>
+                    </div>
                 </td>
                 <td>
-                    {% if res.fl_flag %}
-                        <img src="{{ res.fl_flag }}" class="flag-circle" alt="flag">
-                    {% endif %}
-                    {{ res.faster_lap }}
+                    <div>
+                        {% if res.fl_flag %}
+                            <img src="{{ res.fl_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        {% endif %}
+                        <span class="d-none d-xxl-inline">{{ res.faster_lap }}</span>
+                        <span class="d-inline d-xxl-none">{{ res.fl_abbr }}</span>
+                    </div>
                 </td>
                 <td>
-                    {% if res.team_flag %}
-                        <img src="{{ res.team_flag }}" class="flag-circle" alt="flag">
-                    {% endif %}
-                    {{ res.team }}
+                    <div>
+                        {% if res.team_flag %}
+                            <img src="{{ res.team_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        {% endif %}
+                        <span class="d-none d-xxl-inline">{{ res.team }}</span>
+                        <span class="d-inline d-xxl-none">{{ res.team_abbr }}</span>
+                    </div>
                 </td>
             </tr>
             {% empty %}

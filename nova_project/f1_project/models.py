@@ -119,6 +119,10 @@ class Team(models.Model):
         max_length=42,
         verbose_name="Название команды"
     )
+    team_abbr = models.CharField(
+        max_length=3,
+        verbose_name="Название команды, сокращенно"
+    )
     country = models.ForeignKey(
         'Country',
         on_delete=models.PROTECT,

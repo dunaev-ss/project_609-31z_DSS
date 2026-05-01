@@ -54,14 +54,20 @@ def season_results(request):
             'round': len(results_list) + 1,
             'date': winner_standing.event_date if winner_standing else None,
             'gp_name': gp.grand_prix,
+            'gp_abbr': gp.gp_abbr,
             'gp_country_flag': gp.country.flag.url if gp.country and gp.country.flag else None,
             'winner': winner_standing.driver if winner_standing else "-",
+            'winner_abbr': winner_standing.driver.driver_abbr if winner_standing else "-",
             'winner_flag': winner_standing.driver.country.flag.url if winner_standing and winner_standing.driver.country and winner_standing.driver.country.flag else None,
             'pole': pp_standing.driver if pp_standing else "-",
+            'pole_abbr': pp_standing.driver.driver_abbr if pp_standing else "-",
             'pole_flag': pp_standing.driver.country.flag.url if pp_standing and pp_standing.driver.country and pp_standing.driver.country.flag else None,
             'faster_lap': fl_standing.driver if fl_standing else "-",
+            'fl_abbr': fl_standing.driver.driver_abbr if fl_standing else "-",
             'fl_flag': fl_standing.driver.country.flag.url if fl_standing and fl_standing.driver.country and fl_standing.driver.country.flag else None,
             'team': winner_team,
+            'team_abbr': transfer.team.team_abbr if transfer else "-", # Добавляем это
+            'team_flag': transfer.team.country.flag.url if transfer and transfer.team.country.flag else None,
         })
 
     return render(request, 'f1_project/result.html', {'result': results_list, 'season_year': season_year})
