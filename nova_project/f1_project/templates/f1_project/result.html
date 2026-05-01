@@ -1,0 +1,63 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% block title %}Результаты сезона{% endblock %}
+{% block content %}
+<h2 class="mb-4">Результаты сезона</h2>
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Этап</th>
+                <th>Дата</th>
+                <th>Гран При</th>
+                <th>Победитель</th>
+                <th>Поул</th>
+                <th>Быстрый круг</th>
+                <th>Команда</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in result %}
+            <tr>
+                <td>{{ res.round }}</td>
+                <td>{{ res.date|date:"d.m.Y"|default:"—"}}</td>
+                <td>
+                    {% if res.gp_country_flag %}
+                        <img src="{{ res.gp_country_flag }}" class="flag-circle" alt="flag">
+                    {% endif %}
+                    {{ res.gp_name }}
+                </td>
+                <td>
+                    {% if res.winner_flag %}
+                        <img src="{{ res.winner_flag }}" class="flag-circle" alt="flag">
+                    {% endif %}
+                    {{ res.winner }}
+                </td>
+                <td>
+                    {% if res.pole_flag %}
+                        <img src="{{ res.pole_flag }}" class="flag-circle" alt="flag">
+                    {% endif %}
+                    {{ res.pole }}
+                </td>
+                <td>
+                    {% if res.fl_flag %}
+                        <img src="{{ res.fl_flag }}" class="flag-circle" alt="flag">
+                    {% endif %}
+                    {{ res.faster_lap }}
+                </td>
+                <td>
+                    {% if res.team_flag %}
+                        <img src="{{ res.team_flag }}" class="flag-circle" alt="flag">
+                    {% endif %}
+                    {{ res.team }}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center text-muted py-4">Данных пока нет</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

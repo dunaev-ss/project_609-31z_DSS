@@ -10,6 +10,11 @@ class Country(models.Model):
         max_length=3,
         verbose_name="Название страны, сокращенно"
     )
+    flag = models.FileField(
+        upload_to='flags/',
+        null=True,
+        blank=True,
+        verbose_name="Флаг")
 
     class Meta:
         verbose_name = "Страна"
