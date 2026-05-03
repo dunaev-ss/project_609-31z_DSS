@@ -1,9 +1,9 @@
 from datetime import date
 
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import F, Q, Sum
 
-from . models import GrandPrix, Standing, Transfer
+from . models import Driver, GrandPrix, Standing, Team, Transfer
 
 
 def season_results(request):
@@ -66,8 +66,97 @@ def season_results(request):
             'fl_abbr': fl_standing.driver.driver_abbr if fl_standing else "-",
             'fl_flag': fl_standing.driver.country.flag.url if fl_standing and fl_standing.driver.country and fl_standing.driver.country.flag else None,
             'team': winner_team,
-            'team_abbr': transfer.team.team_abbr if transfer else "-", # Добавляем это
+            'team_abbr': transfer.team.team_abbr if transfer else "-",
             'team_flag': transfer.team.country.flag.url if transfer and transfer.team.country.flag else None,
         })
 
     return render(request, 'f1_project/result.html', {'result': results_list, 'season_year': season_year})
+
+
+def season_standings(request):
+    season_year = int(request.GET.get('season_year', date.today().year))
+    standings_type = request.GET.get('type', 'drivers')
+    
+    season_start = date(season_year, 1, 1)
+    season_end = date(season_year, 12, 31)
+
+    gps = GrandPrix.objects.filter(
+        standing__event_date__range=(season_start, season_end)
+    ).distinct().order_by('standing__event_date')
+
+    standings_data = []
+
+    if standings_type == 'drivers':
+        driver_standings = Driver.objects.filter(
+            standing__event_date__range=(season_start, season_end)
+        ).annotate(
+            total_pts=Sum('standing__pts', filter=Q(standing__event_date__range=(season_start, season_end)))
+        ).order_by('-total_pts')
+
+        for driver in driver_standings:
+            results = []
+            driver_teams = set()
+            for gp in gps:
+                res = Standing.objects.filter(driver=driver, grand_prix=gp, event_date__range=(season_start, season_end)).first()
+                if res:
+                    transfer = Transfer.objects.filter(
+                        driver=driver, start_date__lte=res.event_date
+                    ).filter(Q(end_date__gte=res.event_date) | Q(end_date__isnull=True)).first()
+                    if transfer:
+                        driver_teams.add(transfer.team.team)
+                results.append({
+                    'pts': res.pts if res else None,
+                    'pp': res.pp if res else False,
+                    'fl': res.fl if res else False,
+                })
+            standings_data.append({
+                'name': driver.driver,
+                'subtext': ", ".join(sorted(driver_teams)),
+                'flag': driver.country.flag.url if driver.country.flag else None,
+                'results': results,
+                'total_pts': driver.total_pts
+            })
+
+    else:
+        team_standings = Team.objects.filter(
+            transfer__driver__standing__event_date__range=(season_start, season_end)
+        ).annotate(
+            total_pts=Sum(
+                'transfer__driver__standing__pts',
+                filter=(
+                    Q(transfer__driver__standing__event_date__range=(season_start, season_end)) &
+                    Q(transfer__start_date__lte=F('transfer__driver__standing__event_date')) &
+                    (Q(transfer__end_date__gte=F('transfer__driver__standing__event_date')) | Q(transfer__end_date__isnull=True))
+                )
+            )
+        ).distinct().order_by('-total_pts')
+
+        for team in team_standings:
+            results = []
+            for gp in gps:
+                gp_data = Standing.objects.filter(grand_prix=gp, event_date__range=(season_start, season_end)).first()
+                pts_sum = None
+                if gp_data:
+                    pts_sum = Standing.objects.filter(
+                        grand_prix=gp, event_date=gp_data.event_date,
+                        driver__transfer__team=team,
+                        driver__transfer__start_date__lte=gp_data.event_date
+                    ).filter(
+                        Q(driver__transfer__end_date__gte=gp_data.event_date) | Q(driver__transfer__end_date__isnull=True)
+                    ).aggregate(total=Sum('pts'))['total']
+                results.append({'pts': pts_sum})
+
+            standings_data.append({
+                'name': team.team,
+                'subtext': None,
+                'flag': team.country.flag.url if team.country.flag else None,
+                'results': results,
+                'total_pts': team.total_pts
+            })
+
+    return render(request, 'f1_project/standings.html', {
+        'gps': gps,
+        'standings': standings_data,
+        'season_year': season_year,
+        'type': standings_type
+    })

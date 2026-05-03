@@ -1,9 +1,9 @@
 {% extends "base_layout.html" %}
 {% load static %}
-{% block title %}Результаты сезона {{ season_year }}{% endblock %}
+{% block title %}Результаты сезона {{ season_year }} года{% endblock %}
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0">Результаты сезона {{ season_year }}</h2>
+    <h2 class="mb-0">Результаты сезона {{ season_year }} года</h2>
     
     <form method="get" class="d-flex gap-2">
         <input type="number" name="season_year" class="form-control form-control-sm"

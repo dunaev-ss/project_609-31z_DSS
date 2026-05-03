@@ -1,0 +1,92 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% block title %}Турнирная таблица{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <h2 class="mb-0">Турнирная таблица</h2>
+    <div class="d-flex gap-3 align-items-center">
+        <div class="btn-group btn-group-sm shadow-sm">
+            <a href="?type=drivers&season_year={{ season_year }}"
+                class="btn btn-outline-primary {% if type == 'drivers' %}active{% endif %}">
+                Drivers
+            </a>
+            <a href="?type=teams&season_year={{ season_year }}"
+                class="btn btn-outline-primary {% if type == 'teams' %}active{% endif %}">
+                Teams
+            </a>
+        </div>
+        <form method="get" class="d-flex gap-2">
+            <input type="hidden" name="type" value="{{ type }}">
+            <input type="number" name="season_year" class="form-control form-control-sm" value="{{ season_year }}"
+                style="width: 86px;">
+            <button type="submit" class="btn btn-primary btn-sm">Показать</button>
+        </form>
+    </div>
+</div>
+<div class="table-responsive border-0">
+    <table class="table table-sm align-middle table-nowrap border" style="font-size: 0.75rem;">
+        <thead class="table-light">
+            <tr class="text-uppercase text-muted text-center" style="font-size: 0.7rem; letter-spacing: 0.5px;">
+                <th class="text-start ps-3" style="min-width: 180px;">
+                    POS | {% if type == 'drivers' %}DRIVER{% else %}TEAM{% endif %}
+                </th>
+                {% for gp in gps %}
+                <th style="min-width: 50px;">
+                    {% if gp.country.flag %}
+                    <img src="{{ gp.country.flag.url }}" class="flag-circle m-0" style="width: 16px; height: 16px;"><br>
+                    {% endif %}
+                    {{ gp.gp_abbr }}
+                </th>
+                {% endfor %}
+                <th style="min-width: 50px;">PTS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in standings %}
+            <tr>
+                <td class="text-start border-end ps-3">
+                    <div class="d-flex align-items-center">
+                        <span class="fw-bold me-2 text-muted" style="min-width: 20px;">{{ forloop.counter }}</span>
+                        {% if entry.flag %}
+                        <img src="{{ entry.flag }}" class="flag-circle me-2" style="width: 18px; height: 18px;">
+                        {% endif %}
+                        <div>
+                            <div class="fw-bold text-dark">{{ entry.name }}</div>
+                            {% if entry.subtext %}
+                            <div class="text-muted" style="font-size: 0.65rem;">{{ entry.subtext }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+                {% for res in entry.results %}
+                <td class="text-center border-end">
+                    {% if res.pts is not none %}
+                    <div class="fw-bold">{{ res.pts }}</div>
+                    {% if type == 'drivers' %}
+                    <div class="d-flex justify-content-center gap-1 mt-1">
+                        {% if res.pp %}
+                        <span class="badge bg-primary-subtle text-primary-emphasis"
+                            style="font-size: 0.4rem; padding: 2px 3px; opacity: 0.9;">PP</span>
+                        {% endif %}
+                        {% if res.fl %}
+                        <span class="badge bg-danger-subtle text-danger-emphasis"
+                            style="font-size: 0.4rem; padding: 2px 3px; opacity: 0.8;">FL</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <span class="text-muted opacity-25">—</span>
+                    {% endif %}
+                </td>
+                {% endfor %}
+                <td class="text-center fw-bold bg-light" style="font-size: 0.8rem;">{{ entry.total_pts|default:0 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="{{ gps|length|add:2 }}" class="text-center text-muted py-4">Данных за этот сезон нет</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
