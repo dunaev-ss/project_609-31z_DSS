@@ -1,0 +1,14 @@
+{% extends "base_layout.html" %}
+
+{% block title %}NOVA | {{ title }}{% endblock %}
+
+{% block content %}
+<!-- Адаптивный заголовок -->
+<h1 class="mb-4 page-title fs-3 fw-bold text-uppercase d-md-none">{{ title }}</h1>
+<h1 class="mb-4 page-title display-4 d-none d-md-block">{{ title }}</h1>
+
+<div class="py-5 text-center border rounded bg-light">
+    <p class="lead text-muted mb-0">Этот раздел находится в разработке.</p>
+    <small class="text-uppercase fw-bold opacity-25" style="letter-spacing: 2px;">Скоро будет, но это не точно...</small>
+</div>
+{% endblock %}

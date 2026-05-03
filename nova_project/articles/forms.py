@@ -13,7 +13,16 @@ class ArticleForm(forms.ModelForm):
             "thumbnail": "Обложка"
         }
         widgets = {
-            "title": forms.TextInput(attrs={'placeholder': 'Введите заголовок статьи...', 'class': 'form-control mb-3'}),
-            "body": forms.TextInput(attrs={'placeholder': 'Введите текст статьи...', 'class': 'form-control mb-3'}),
-            "thumbnail": forms.ClearableFileInput(attrs={'class': 'form-control mb-3'}),
+            "title": forms.TextInput(attrs={
+                'placeholder': 'Введите заголовок статьи...', 
+                'class': 'form-control mb-3'
+            }),
+            "body": forms.Textarea(attrs={
+                'placeholder': 'Введите текст статьи...',
+                'class': 'form-control mb-3',
+                'rows': 13
+            }),
+            "thumbnail": forms.ClearableFileInput(attrs={
+                'class': 'form-control mb-3'
+            }),
         }

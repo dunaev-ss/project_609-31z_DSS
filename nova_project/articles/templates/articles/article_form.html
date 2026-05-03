@@ -1,18 +1,29 @@
 {% extends "base_layout.html" %}
 {% load static %}
-{% block title %}Создание или редактирование статьи{% endblock title %}
+
+{% block title %}NOVA | Редактор статьи{% endblock title %}
+
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-10 col-lg-8">
-        <h1>Создание или редактирование статьи</h1>
+    <div class="col-12 col-md-10 col-lg-8">
+        <!-- Адаптивный заголовок в стиле проекта -->
+        <h1 class="mb-4 page-title fs-3 fw-bold d-md-none">Редактор статьи</h1>
+        <h1 class="mb-4 page-title display-5 d-none d-md-block">Редактор статьи</h1>
+
         <form class="d-grid gap-3" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            
             <div class="form-fields">
                 {{ form }}
             </div>
-            <div class="mt-3">
-                <button class="btn btn-primary shadow-sm" type="submit">Сохранить</button>
-                <a class="btn btn-outline-secondary ms-2" href="{% url 'homepage' %}">Отмена</a>
+
+            <div class="mt-4 d-flex gap-2">
+                <button class="btn btn-primary shadow-sm text-uppercase fw-bold small px-4 nav-link-f1" type="submit">
+                    Сохранить
+                </button>
+                <a class="btn btn-outline-secondary text-uppercase fw-bold small px-4 nav-link-f1" href="{% url 'homepage' %}">
+                    Отмена
+                </a>
             </div>
         </form>
     </div>

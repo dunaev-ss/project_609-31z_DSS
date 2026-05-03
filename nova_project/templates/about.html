@@ -1,17 +1,28 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ru">
+{% extends "base_layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
-    <link rel="stylesheet" href="{% static '/css/style.css' %}">
-</head>
+{% block title %}NOVA | О проекте{% endblock title %}
 
-<body>
-    <h1>About</h1>
-    <p>Company site</p>
-</body>
+{% block content %}
+<!-- Адаптивный заголовок -->
+<h1 class="mb-4 page-title fs-3 fw-bold text-uppercase d-md-none">О проекте</h1>
+<h1 class="mb-4 page-title display-4 d-none d-md-block">О проекте</h1>
 
-</html>
+<div class="row">
+    <div class="col-lg-8">
+        <p class="lead text-muted">
+            Автор проекта
+        </p>
+        <hr class="my-4">
+        <p>
+            Дунаев Сергей Сергеевич, Сургутский государственный университет, группа 609-31з "Программная инженерия", 2026
+        </p>
+        <p class="lead text-muted">
+            Описание проекта
+        </p>
+        <hr class="my-4">
+        <p>
+            Создание проекта на Django в рамках учебного процесса в целях использования полученых знаний и навыков
+        </p>
+    </div>
+</div>
+{% endblock content %}

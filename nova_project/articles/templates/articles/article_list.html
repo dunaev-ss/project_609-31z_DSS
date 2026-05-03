@@ -1,11 +1,31 @@
 {% extends "base_layout.html" %}
-{% block title %}Список статей{% endblock title %}
+{% block title %}NOVA | News{% endblock title %}
 {% block content %}
-<h1 class="mb-4">Список статей</h1>
-<div class="mb-5">
-    {% if user.is_authenticated %}
-    <a class="btn btn-primary shadow-sm" href="{% url 'articles:create' %}">Добавить статью</a>
-    {% endif %}
+
+<!-- Адаптивный заголовок -->
+<h1 class="mb-4 page-title fs-3 fw-bold d-md-none">Новости</h1>
+<h1 class="mb-4 page-title display-4 d-none d-md-block">Новости</h1>
+
+<div class="row align-items-center mb-5 row-gap-3">
+    <div class="col-12 col-md-auto">
+        {% if user.is_authenticated %}
+        <a class="btn btn-primary shadow-sm w-100 w-md-auto" href="{% url 'articles:create' %}">
+            Добавить статью
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="col-12 col-md-4 ms-auto">
+        <form action="{% url 'homepage' %}" method="get">
+            <div class="input-group shadow-sm rounded">
+                <input class="form-control border-secondary" type="search" name="search" placeholder="Поиск..."
+                    value="{{ request.GET.search|default:'' }}">
+                <button class="btn btn-primary" type="submit">
+                    Найти
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 <div class="articles-container">
     {% for element in articles %}
@@ -33,7 +53,8 @@
             <a class="page-link" href="?page=1&search={{ request.GET.search }}">&laquo;</a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="?page={{ articles.previous_page_number }}&search={{ request.GET.search }}">Назад</a>
+            <a class="page-link"
+                href="?page={{ articles.previous_page_number }}&search={{ request.GET.search }}">Назад</a>
         </li>
         {% endif %}
         <li class="page-item active">
@@ -44,7 +65,8 @@
             <a class="page-link" href="?page={{ articles.next_page_number }}&search={{ request.GET.search }}">Вперед</a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="?page={{ articles.paginator.num_pages }}&search={{ request.GET.search }}">&raquo;</a>
+            <a class="page-link"
+                href="?page={{ articles.paginator.num_pages }}&search={{ request.GET.search }}">&raquo;</a>
         </li>
         {% endif %}
     </ul>

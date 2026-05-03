@@ -12,3 +12,22 @@
 .table-nowrap td, .table-nowrap th {
     white-space: nowrap;
 }
+
+.nav-link-f1 {
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+}
+
+.nav-link-f1:hover {
+    opacity: 1 !important;
+}
+
+.page-title {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.article-body { 
+    line-height: 1.7; 
+}

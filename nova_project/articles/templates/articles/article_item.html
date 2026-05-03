@@ -1,20 +1,43 @@
 {% extends "base_layout.html" %}
 {% load static %}
-{% block title %}{{ article.title }}{% endblock title %}
+
+{% block title %}NOVA | {{ article.title }}{% endblock title %}
+
 {% block content %}
 <article>
-    <div class="text-center mb-4">
-        <img class="img-fluid rounded shadow-sm" src="{{ article.thumbnail.url }}" alt="{{ article.title }}">
+    <div class="mb-4">
+        <a href="{% url 'homepage' %}" class="text-decoration-none text-muted small text-uppercase fw-bold nav-link-f1">
+            <span class="me-1">&larr;</span> Назад к новостям
+        </a>
     </div>
-    <h1 class="display-5 fw-bold mb-3">{{ article.title }}</h1>
-    <div class="article-body fs-5 text-dark mb-5" style="line-height: 1.6; text-align:justify;">
+
+    <div class="mb-5">
+        <img class="img-fluid rounded shadow-sm w-100" src="{{ article.thumbnail.url }}" alt="{{ article.title }}">
+    </div>
+
+    <h1 class="mb-3 page-title fs-3 fw-bold d-md-none">{{ article.title }}</h1>
+    <h1 class="mb-3 page-title display-5 d-none d-md-block">{{ article.title }}</h1>
+
+    <div class="d-flex align-items-center mb-4 text-muted small text-uppercase fw-bold nav-link-f1">
+        <span class="text-primary">{{ article.author.username }}</span>
+        <span class="mx-2 opacity-50">|</span>
+        <span>{{ article.date|date:"d.m.Y" }}</span>
+    </div>
+
+    <div class="article-body fs-5 text-dark mb-5">
         {{ article.body|linebreaks }}
     </div>
+
     {% if user.is_authenticated and user.id == article.author.id %}
-    <div class="border-top pt-4">
-        <a class="btn btn-outline-primary btn-sm me-2"
-            href="{% url 'articles:update' slug=article.slug %}">Редактировать</a>
-        <a class="btn btn-outline-danger btn-sm" href="{% url 'articles:delete' slug=article.slug %}">Удалить</a>
+    <div class="border-top pt-4 d-flex gap-2">
+        <a class="btn btn-outline-primary btn-sm nav-link-f1 text-uppercase fw-bold small"
+            href="{% url 'articles:update' slug=article.slug %}">
+            Редактировать
+        </a>
+        <a class="btn btn-outline-danger btn-sm nav-link-f1 text-uppercase fw-bold small"
+            href="{% url 'articles:delete' slug=article.slug %}">
+            Удалить
+        </a>
     </div>
     {% endif %}
 </article>

@@ -160,3 +160,19 @@ def season_standings(request):
         'season_year': season_year,
         'type': standings_type
     })
+
+
+def calendar_view(request):
+    return render(request, 'f1_project/stub.html', {'title': 'Календарь'})
+
+
+def teams_list(request):
+    return render(request, 'f1_project/stub.html', {'title': 'Команды'})
+
+
+def drivers_list(request):
+    return render(request, 'f1_project/stub.html', {'title': 'Пилоты'})
+
+
+def data_analysis(request):
+    return render(request, 'f1_project/stub.html', {'title': 'Анализ данных'})

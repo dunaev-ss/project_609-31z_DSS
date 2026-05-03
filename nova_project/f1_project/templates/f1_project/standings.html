@@ -1,27 +1,47 @@
 {% extends "base_layout.html" %}
 {% load static %}
-{% block title %}Турнирная таблица{% endblock %}
+
+{% block title %}NOVA | Турнирная таблица{% endblock %}
+
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-    <h2 class="mb-0">Турнирная таблица</h2>
-    <div class="d-flex gap-3 align-items-center">
-        <div class="btn-group btn-group-sm shadow-sm">
-            <a href="?type=drivers&season_year={{ season_year }}"
-                class="btn btn-outline-primary {% if type == 'drivers' %}active{% endif %}">
-                Drivers
-            </a>
-            <a href="?type=teams&season_year={{ season_year }}"
-                class="btn btn-outline-primary {% if type == 'teams' %}active{% endif %}">
-                Teams
-            </a>
-        </div>
-        <form method="get" class="d-flex gap-2">
-            <input type="hidden" name="type" value="{{ type }}">
-            <input type="number" name="season_year" class="form-control form-control-sm" value="{{ season_year }}"
-                style="width: 86px;">
-            <button type="submit" class="btn btn-primary btn-sm">Показать</button>
-        </form>
+
+<!-- Адаптивный заголовок -->
+<h1 class="mb-3 page-title fs-3 fw-bold text-uppercase d-md-none">Турнирная таблица</h1>
+<h1 class="mb-3 page-title display-4 d-none d-md-block">Турнирная таблица</h1>
+
+<!-- Версия для большого экрана -->
+<div class="d-none d-md-flex justify-content-between align-items-center mb-3 gap-3">
+    <div class="btn-group btn-group-sm shadow-sm">
+        <a href="?type=drivers&season_year={{ season_year }}"
+            class="btn btn-outline-primary px-3 {% if type == 'drivers' %}active{% endif %}">Drivers</a>
+        <a href="?type=teams&season_year={{ season_year }}"
+            class="btn btn-outline-primary px-3 {% if type == 'teams' %}active{% endif %}">Teams</a>
     </div>
+    <form method="get">
+        <input type="hidden" name="type" value="{{ type }}">
+        <div class="input-group input-group-sm shadow-sm">
+            <input type="number" name="season_year" class="form-control text-center" value="{{ season_year }}"
+                style="width: 86px; flex: none;">
+            <button type="submit" class="btn btn-primary px-3">Показать</button>
+        </div>
+    </form>
+</div>
+
+<!-- Версия для маленького экрана -->
+<div class="d-md-none mb-3">
+    <div class="btn-group btn-group-sm shadow-sm w-100 mb-3">
+        <a href="?type=drivers&season_year={{ season_year }}"
+            class="btn btn-outline-primary w-50 {% if type == 'drivers' %}active{% endif %}">Drivers</a>
+        <a href="?type=teams&season_year={{ season_year }}"
+            class="btn btn-outline-primary w-50 {% if type == 'teams' %}active{% endif %}">Teams</a>
+    </div>
+    <form method="get">
+        <input type="hidden" name="type" value="{{ type }}">
+        <div class="input-group input-group-sm shadow-sm">
+            <input type="number" name="season_year" class="form-control w-50 text-center" value="{{ season_year }}">
+            <button type="submit" class="btn btn-primary w-50">Показать</button>
+        </div>
+    </form>
 </div>
 <div class="table-responsive border-0">
     <table class="table table-sm align-middle table-nowrap border" style="font-size: 0.75rem;">

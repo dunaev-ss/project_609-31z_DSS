@@ -1,18 +1,33 @@
 {% extends "base_layout.html" %}
+
+{% block title %}NOVA | Вход{% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4">
-        <h1 class="text-center mb-4">Вход</h1>
+    <div class="col-12 col-md-6 col-lg-4">
+        <!-- Адаптивный заголовок -->
+        <h1 class="mb-4 page-title fs-3 fw-bold text-center d-md-none">Вход</h1>
+        <h1 class="mb-4 page-title display-5 text-center d-none d-md-block">Вход</h1>
+
         <form class="d-grid gap-3" action="{% url 'accounts:login' %}" method="post">
             {% csrf_token %}
+            
             <div class="form-fields">
                 {{ form }}
             </div>
+
             {% if request.GET.next %}
             <input type="hidden" name="next" value="{{ request.GET.next }}">
             {% endif %}
-            <button class="btn btn-primary shadow-sm" type="submit">Войти</button>
+
+            <button class="btn btn-primary shadow-sm py-2 text-uppercase fw-bold small" style="letter-spacing: 1px;" type="submit">
+                Войти
+            </button>
         </form>
+        
+        <p class="text-center mt-4 small text-muted">
+            Нет аккаунта? <a href="{% url 'accounts:signup' %}" class="text-primary text-decoration-none">Зарегистрироваться</a>
+        </p>
     </div>
 </div>
 {% endblock content %}
