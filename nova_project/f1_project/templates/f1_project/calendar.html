@@ -1,0 +1,62 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}NOVA | Календарь{% endblock title %}
+
+{% block content %}
+
+<h1 class="mb-3 page-title fs-3 fw-bold text-uppercase d-md-none">Календарь</h1>
+<h1 class="mb-3 page-title display-4 d-none d-md-block">Календарь</h1>
+
+<div class="d-none d-md-flex justify-content-end align-items-center mb-3 gap-3">
+    <form method="get">
+        <div class="input-group input-group-sm shadow-sm">
+            <input type="number" name="season_year" class="form-control text-center" value="{{ season_year }}"
+                style="width: 86px; flex: none;">
+            <button type="submit" class="btn btn-primary px-3">Показать</button>
+        </div>
+    </form>
+</div>
+
+<div class="d-md-none mb-3">
+    <form method="get">
+        <div class="input-group input-group-sm shadow-sm">
+            <input type="number" name="season_year" class="form-control w-50 text-center" value="{{ season_year }}">
+            <button type="submit" class="btn btn-primary w-50">Показать</button>
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive border-0">
+    <table class="table table-hover table-sm table-nowrap align-middle small">
+        <thead class="table-light">
+            <tr class="text-uppercase text-muted text-center nav-link-f1" style="font-size: 0.7rem; letter-spacing: 0.5px;">
+                <th class="ps-2">Раунд</th>
+                <th>Дата</th>
+                <th class="text-start pe-2">Гран При</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in calendar %}
+            <tr class="text-center">
+                <td class="text-muted fw-bold">{{ item.round }}</td>
+                <td>{{ item.date|date:"d.m.Y"|default:"—" }}</td>
+                <td class="text-start pe-2">
+                    <div class="d-flex align-items-center">
+                        {% if item.gp_flag %}
+                        <img src="{{ item.gp_flag }}" class="flag-circle" alt="flag">
+                        {% endif %}
+                        <span class="d-none d-md-inline">{{ item.gp_name }}</span>
+                        <span class="d-inline d-md-none">{{ item.gp_abbr }}</span>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center text-muted py-4">Данных пока нет</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

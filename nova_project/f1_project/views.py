@@ -163,7 +163,29 @@ def season_standings(request):
 
 
 def calendar_view(request):
-    return render(request, 'f1_project/stub.html', {'title': 'Календарь'})
+    current_year = date.today().year
+    season_year = int(request.GET.get('season_year', current_year))
+    
+    gps = GrandPrix.objects.filter(
+        standing__event_date__year=season_year
+    ).distinct().order_by('standing__event_date')
+    
+    calendar_data = []
+    for index, gp in enumerate(gps, start=1):
+        first_event = Standing.objects.filter(grand_prix=gp, event_date__year=season_year).first()
+        
+        calendar_data.append({
+            'round': index,
+            'date': first_event.event_date if first_event else None,
+            'gp_name': gp.grand_prix,
+            'gp_abbr': gp.gp_abbr,
+            'gp_flag': gp.country.flag.url if gp.country and gp.country.flag else None,
+        })
+
+    return render(request, 'f1_project/calendar.html', {
+        'calendar': calendar_data,
+        'season_year': season_year
+    })
 
 
 def teams_list(request):
