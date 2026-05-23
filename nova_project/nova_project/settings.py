@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'articles',
     'accounts',
     'f1_project',
+    'charts',
 ]
 
 MIDDLEWARE = [

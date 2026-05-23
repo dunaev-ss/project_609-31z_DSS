@@ -9,5 +9,4 @@ urlpatterns = [
     path('results/', views.season_results, name='season_results'),
     path('teams/', views.teams_list, name='teams'),
     path('drivers/', views.drivers_list, name='drivers'),
-    path('analysis/', views.data_analysis, name='data_analysis'),
 ]

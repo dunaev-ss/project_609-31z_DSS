@@ -1,0 +1,103 @@
+{% extends "base_layout.html" %}
+
+{% block title %}NOVA | {{ title }}{% endblock %}
+
+{% block content %}
+<!-- Адаптивный заголовок -->
+<h1 class="mb-4 page-title fs-3 fw-bold text-uppercase d-md-none">{{ title }}</h1>
+<h1 class="mb-4 page-title display-4 d-none d-md-block">{{ title }}</h1>
+
+<!-- Версия для большого экрана -->
+<div class="d-none d-md-flex justify-content-between align-items-center mb-3 gap-3">
+    <div class="btn-group btn-group-sm shadow-sm">
+        <a href="?type=drivers&season_year={{ season_year }}"
+            class="btn btn-outline-primary px-3 {% if standings_type == 'drivers' %}active{% endif %}">Drivers</a>
+        <a href="?type=teams&season_year={{ season_year }}"
+            class="btn btn-outline-primary px-3 {% if standings_type == 'teams' %}active{% endif %}">Teams</a>
+    </div>
+    <form method="get">
+        <input type="hidden" name="type" value="{{ standings_type }}">
+        <div class="input-group input-group-sm shadow-sm">
+            <select name="season_year" class="form-select text-center" style="width: 100px; flex: none;">
+                {% for y in years_range %}
+                    <option value="{{ y }}" {% if y == season_year %}selected{% endif %}>{{ y }}</option>
+                {% empty %}
+                    <option value="{{ season_year }}">{{ season_year }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary px-3">Показать</button>
+        </div>
+    </form>
+</div>
+
+<!-- Версия для маленького экрана -->
+<div class="d-md-none mb-3">
+    <div class="btn-group btn-group-sm shadow-sm w-100 mb-3">
+        <a href="?type=drivers&season_year={{ season_year }}"
+            class="btn btn-outline-primary w-50 {% if standings_type == 'drivers' %}active{% endif %}">Drivers</a>
+        <a href="?type=teams&season_year={{ season_year }}"
+            class="btn btn-outline-primary w-50 {% if standings_type == 'teams' %}active{% endif %}">Teams</a>
+    </div>
+    <form method="get">
+        <input type="hidden" name="type" value="{{ standings_type }}">
+        <div class="input-group input-group-sm shadow-sm">
+            <select name="season_year" class="form-select w-50 text-center">
+                {% for y in years_range %}
+                    <option value="{{ y }}" {% if y == season_year %}selected{% endif %}>{{ y }}</option>
+                {% empty %}
+                    <option value="{{ season_year }}">{{ season_year }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary w-50">Показать</button>
+        </div>
+    </form>
+</div>
+
+<!-- Контейнер для графика -->
+<div class="bg-white p-3 border rounded shadow-sm mt-4">
+    <canvas id="analysisChart" width="400" height="180"></canvas>
+</div>
+
+<!-- Скрытые JSON данные от Django -->
+{{ chart_labels|json_script:"chart-labels-data" }}
+{{ chart_data|json_script:"chart-values-data" }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const labelsData = JSON.parse(document.getElementById('chart-labels-data').textContent);
+    const valuesData = JSON.parse(document.getElementById('chart-values-data').textContent);
+    const standingsType = "{{ standings_type }}";
+
+    const ctx = document.getElementById('analysisChart').getContext('2d');
+    
+    const barColor = 'rgba(13, 110, 253, 0.7)';
+    const borderColor = 'rgba(13, 110, 253, 1)';
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labelsData,
+            datasets: [{
+                label: standingsType === 'drivers' ? 'Очки пилота за сезон' : 'Очки команды за сезон',
+                data: valuesData,
+                backgroundColor: barColor,
+                borderColor: borderColor,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Очки'
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
