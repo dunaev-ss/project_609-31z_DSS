@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from . import forms
+from .import forms
 
 from .models import Article
 
@@ -17,12 +17,12 @@ def article_list(request):
     paginator = Paginator(articles_all, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'articles/article_list.html', {'articles': page_obj})
+    return render(request, 'news/article_list.html', {'news': page_obj})
 
 
 def article_item(request, slug):
     article = Article.objects.get(slug=slug)
-    return render(request, 'articles/article_item.html', {'article': article})
+    return render(request, 'news/article_item.html', {'article': article})
 
 
 @login_required(login_url='accounts:login')
@@ -36,7 +36,7 @@ def article_create(request):
             return redirect('homepage')
     else:
         form = forms.ArticleForm()
-    return render(request, 'articles/article_form.html', {'form': form})
+    return render(request, 'news/article_form.html', {'form': form})
 
 
 @login_required(login_url='accounts:login')
@@ -49,10 +49,10 @@ def article_update(request, slug):
                 instance = form.save(commit=False)
                 instance.author = request.user
                 instance.save()
-                return redirect('articles:article_detail', slug=article.slug)
+                return redirect('news:article_detail', slug=article.slug)
         else:
             form = forms.ArticleForm(instance=article)
-        return render(request, 'articles/article_form.html', {'form': form})
+        return render(request, 'news/article_form.html', {'form': form})
     return HttpResponse('401 Unautorized', status=401)
 
 
@@ -63,5 +63,5 @@ def article_delete(request, slug):
         if request.method == 'POST':
             article.delete()
             return redirect('homepage')
-        return render(request, 'articles/article_confirm_delete.html', {'article': article})
+        return render(request, 'news/article_confirm_delete.html', {'article': article})
     return HttpResponse('401 Unautorized', status=401)

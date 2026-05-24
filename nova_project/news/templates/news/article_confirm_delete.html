@@ -1,0 +1,32 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}NOVA | Удаление статьи{% endblock title %}
+
+{% block content %}
+<div>
+    <div>
+        <h1 class="mb-4 display-6 display-md-4 fw-bold text-uppercase nova-ls-1">Удаление статьи</h1>
+        <p class="mb-4 fs-5">
+            Вы действительно хотите безвозвратно удалить статью <strong>"{{ article.title }}"</strong>?
+        </p>
+        <hr class="mt-4">
+        <form class="d-grid gap-3" method="post">
+            {% csrf_token %}
+            <div class="row row-gap-3">
+                <div class="col-md-auto">
+                    <button class="btn btn-danger w-100 w-md-auto" type="submit">
+                        Удалить
+                    </button>
+                </div>
+                <div class="col-md-auto">
+                    <a class="btn btn-secondary w-100 w-md-auto"
+                        href="{% url 'news:article_detail' slug=article.slug %}">
+                        Отмена
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

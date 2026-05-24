@@ -4,26 +4,23 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-5">
-        <!-- Адаптивный заголовок -->
-        <h1 class="mb-4 page-title fs-3 fw-bold text-center d-md-none">Регистрация</h1>
-        <h1 class="mb-4 page-title display-5 text-center d-none d-md-block">Регистрация</h1>
-
-        <form action="{% url 'accounts:signup' %}" method="post" class="d-grid gap-2">
+    <div class="col-12 col-md-8">
+        <h1 class="mb-4 display-6 display-md-4 fw-bold text-center text-uppercase nova-ls-1">Регистрация</h1>
+        <form class="d-grid gap-3" action="{% url 'accounts:signup' %}" method="post">
             {% csrf_token %}
-            
             <div class="form-fields">
                 {{ form }}
             </div>
-
-            <button class="btn btn-primary shadow-sm py-2 mt-3 text-uppercase fw-bold small" 
-                    style="letter-spacing: 1px;" type="submit">
-                Зарегистрироваться
-            </button>
+            <div class="row row-gap-3 justify-content-center">
+                <div class="col-md-auto">
+                    <button class="btn btn-primary w-100 w-md-auto" type="submit">
+                        Зарегистрироваться
+                    </button>
+                </div>
+            </div>
         </form>
-
         <p class="text-center mt-4 small text-muted">
-            Уже есть аккаунт? <a href="{% url 'accounts:login' %}" class="text-primary text-decoration-none">Войти</a>
+            Уже есть аккаунт? <a class="text-primary text-decoration-none" href="{% url 'accounts:login' %}">Войти</a>
         </p>
     </div>
 </div>

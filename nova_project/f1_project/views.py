@@ -3,7 +3,7 @@ from datetime import date
 from django.shortcuts import render
 from django.db.models import F, Q, Sum
 
-from . models import Driver, GrandPrix, Standing, Team, Transfer
+from .models import Driver, GrandPrix, Standing, Team, Transfer
 
 
 def season_results(request):
@@ -188,13 +188,5 @@ def calendar_view(request):
     })
 
 
-def teams_list(request):
-    return render(request, 'f1_project/stub.html', {'title': 'Команды'})
-
-
-def drivers_list(request):
-    return render(request, 'f1_project/stub.html', {'title': 'Пилоты'})
-
-
-def data_analysis(request):
-    return render(request, 'f1_project/stub.html', {'title': 'Анализ данных'})
+def teams_and_drivers_list(request):
+    return render(request, 'f1_project/stub.html', {'title': 'Команды и пилоты'})

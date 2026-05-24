@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('articles', '0003_article_thumbnail'),
+        ('news', '0003_article_thumbnail'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 

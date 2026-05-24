@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -13,87 +14,77 @@
 
 <body class="bg-light">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="/">NOVA project</a>
 
-                <div class="vr d-none d-lg-block mx-3 text-light opacity-25"></div>
+                <div class="vr d-none d-xl-block mx-3 text-light"></div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto text-center py-2 py-lg-0">
+                    <ul class="navbar-nav text-center">
                         <li class="nav-item">
-                            <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
-                                href="{% url 'homepage' %}">
+                            <a class="nav-link text-uppercase px-3 nova-ls-1" href="{% url 'homepage' %}">
                                 Новости
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
-                                href="{% url 'f1_project:calendar' %}">
-                                Календарь
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
+                            <a class="nav-link text-uppercase px-3 nova-ls-1"
                                 href="{% url 'f1_project:season_standings' %}">
                                 Турнирная таблица
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
+                            <a class="nav-link text-uppercase px-3 nova-ls-1"
                                 href="{% url 'f1_project:season_results' %}">
                                 Результаты сезона
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
-                                href="{% url 'f1_project:teams' %}">
-                                Команды
+                            <a class="nav-link text-uppercase px-3 nova-ls-1"
+                                href="{% url 'f1_project:teams-and-drivers' %}">
+                                Команды и пилоты
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
-                                href="{% url 'f1_project:drivers' %}">
-                                Пилоты
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
-                                href="{% url 'charts:data_analysis' %}">
+                            <a class="nav-link text-uppercase px-3 nova-ls-1" href="{% url 'charts:data_analysis' %}">
                                 Анализ данных
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
-                                href="{% url 'about' %}">
+                            <a class="nav-link text-uppercase px-3 nova-ls-1" href="{% url 'about' %}">
                                 О проекте
                             </a>
                         </li>
                     </ul>
 
-                    <hr class="text-light d-lg-none my-2">
-                    <div class="vr d-none d-lg-block mx-3 text-light opacity-25"></div>
+                    <hr class="text-light my-2">
+
+                    <div class="vr d-none d-xl-block mx-3 text-light"></div>
 
                     <div class="navbar-nav flex-row align-items-center justify-content-center">
                         {% if user.is_authenticated %}
                         <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
                             {% csrf_token %}
                             <button type="submit"
-                                class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold border-0 bg-transparent px-3">
+                                class="nav-link text-uppercase border-0 bg-transparent px-3 nova-ls-1">
                                 Выход
                             </button>
                         </form>
                         {% else %}
-                        <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
-                            href="{% url 'accounts:login' %}">
+                        <a class="nav-link text-uppercase px-3 nova-ls-1" href="{% url 'accounts:login' %}">
                             Вход
                         </a>
-                        <a class="nav-link nav-link-f1 text-light opacity-75 small text-uppercase fw-bold px-3"
-                            href="{% url 'accounts:signup' %}">
+
+                        <a class="nav-link text-uppercase px-3 nova-ls-1" href="{% url 'accounts:signup' %}">
                             Регистрация
                         </a>
                         {% endif %}
@@ -103,13 +94,9 @@
         </nav>
     </header>
 
-    <main class="container my-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="bg-white p-4 p-md-5 shadow-sm rounded w-100">
-                    {% block content %}{% endblock content %}
-                </div>
-            </div>
+    <main class="container my-3 my-md-5">
+        <div class="bg-white p-3 p-md-5 shadow-sm rounded">
+            {% block content %}{% endblock content %}
         </div>
     </main>
 

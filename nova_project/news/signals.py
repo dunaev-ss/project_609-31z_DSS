@@ -3,7 +3,7 @@ from django.db.models import signals
 from django.utils.crypto import get_random_string
 from django.utils.text import slugify
 
-from articles.models import Article
+from news.models import Article
 
 
 @receiver(signals.pre_save, sender=Article)

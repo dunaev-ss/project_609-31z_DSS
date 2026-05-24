@@ -4,16 +4,16 @@ from django.contrib import admin
 from django.urls import include, path
 
 from nova_project import views
-from articles import views as article_views
+from news import views as news
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', article_views.article_list, name='homepage'),
-    path('about/', views.about, name='about'),
-    path('articles/', include('articles.urls')),
+    path('', news.article_list, name='homepage'),
     path('accounts/', include('accounts.urls')),
+    path('news/', include('news.urls')),
     path('f1/', include('f1_project.urls')),
     path('charts/', include('charts.urls')),
+    path('about/', views.about, name='about'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

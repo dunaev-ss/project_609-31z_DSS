@@ -1,0 +1,41 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}NOVA | {{ article.title }}{% endblock title %}
+
+{% block content %}
+<article>
+    <div class="mb-4">
+        <a href="{% url 'homepage' %}" class="text-decoration-none text-muted small text-uppercase fw-bold nova-ls-1">
+            <span class="me-2">&larr;</span> Назад к новостям
+        </a>
+    </div>
+    <div class="mb-4">
+        <img class="img-fluid rounded w-100" src="{{ article.thumbnail.url }}" alt="{{ article.title }}">
+    </div>
+    <h1 class="mb-4 display-6 display-md-4 fw-bold text-uppercase nova-ls-1">{{ article.title }}</h1>
+    <div class="d-flex align-items-center mb-4 text-muted small text-uppercase fw-bold nova-ls-1">
+        <span class="text-primary">{{ article.author.username }}</span>
+        <span class="mx-2">|</span>
+        <span>{{ article.date|date:"d.m.Y" }}</span>
+    </div>
+    <div class="fs-5 text-dark mb-4">
+        {{ article.body|linebreaks }}
+    </div>
+    {% if user.is_authenticated and user.id == article.author.id %}
+    <hr class="mt-4">
+    <div class="row row-gap-3">
+        <div class="col-md-auto">
+            <a class="btn btn-primary w-100 w-md-auto" href="{% url 'news:update' slug=article.slug %}">
+                Редактировать
+            </a>
+        </div>
+        <div class="col-md-auto">
+            <a class="btn btn-danger w-100 w-md-auto" href="{% url 'news:delete' slug=article.slug %}">
+                Удалить
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</article>
+{% endblock content %}
