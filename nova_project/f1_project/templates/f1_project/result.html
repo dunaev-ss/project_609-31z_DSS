@@ -6,25 +6,20 @@
 {% block content %}
 <h1 class="mb-4 display-6 display-md-4 fw-bold text-uppercase nova-ls-1">Результаты сезона</h1>
 
-<!-- Версия для большого экрана -->
-<div class="d-none d-md-flex justify-content-end align-items-center mb-3 gap-3">
-    <form method="get">
-        <div class="input-group input-group-sm shadow-sm">
-            <input type="number" name="season_year" class="form-control text-center" value="{{ season_year }}"
-                style="width: 86px; flex: none;">
-            <button type="submit" class="btn btn-primary px-3">Показать</button>
-        </div>
-    </form>
-</div>
-
-<!-- Версия для маленького экрана -->
-<div class="d-md-none mb-3">
-    <form method="get">
-        <div class="input-group input-group-sm shadow-sm">
-            <input type="number" name="season_year" class="form-control w-50 text-center" value="{{ season_year }}">
-            <button type="submit" class="btn btn-primary w-50">Показать</button>
-        </div>
-    </form>
+<div class="row mb-4 justify-content-end">
+    <div class="col-md-auto">
+        <form method="get">
+            <div class="input-group rounded">
+                <input class="form-control text-center" 
+                       type="number" 
+                       name="season_year" 
+                       value="{{ season_year }}">
+                <button class="btn btn-primary" type="submit">
+                    Показать
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="table-responsive border-0">
