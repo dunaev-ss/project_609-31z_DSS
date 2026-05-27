@@ -22,85 +22,94 @@
     </div>
 </div>
 
-<div class="table-responsive border-0">
-    <table class="table table-hover table-sm table-nowrap align-middle small">
-        <thead class="table-light">
-            <tr class="text-uppercase text-muted text-center" style="font-size: 0.7rem; letter-spacing: 0.5px;">
-                <th class="ps-2">#</th>
-                <th>
-                    <span class="d-none d-md-inline">Дата</span>
-                    <span class="d-inline d-md-none">Date</span>
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle">
+        <thead class="table-dark border-0">
+            <tr class="text-uppercase text-center">
+                <th class="text-center">
+                    <span class="d-none d-xl-inline">#</span>
+                    <span class="d-inline d-xl-none small">#</span>
                 </th>
                 <th class="text-start">
-                    <span class="d-none d-md-inline">Гран При</span>
-                    <span class="d-inline d-md-none">GP</span>
+                    <span class="d-none d-xl-inline">Дата</span>
+                    <span class="d-inline d-xl-none small">Date</span>
                 </th>
                 <th class="text-start">
-                    <span class="d-none d-md-inline">Победитель</span>
-                    <span class="d-inline d-md-none">WIN</span>
+                    <span class="d-none d-xl-inline">Гран При</span>
+                    <span class="d-inline d-xl-none small">GP</span>
                 </th>
                 <th class="text-start">
-                    <span class="d-none d-md-inline">Поул</span>
-                    <span class="d-inline d-md-none">PP</span>
+                    <span class="d-none d-xl-inline">Победитель</span>
+                    <span class="d-inline d-xl-none small">WIN</span>
                 </th>
                 <th class="text-start">
-                    <span class="d-none d-md-inline">Быстрый круг</span>
-                    <span class="d-inline d-md-none">FL</span>
+                    <span class="d-none d-xl-inline">Поул</span>
+                    <span class="d-inline d-xl-none small">PP</span>
                 </th>
-                <th class="text-start pe-2">
-                    <span class="d-none d-md-inline">Команда</span>
-                    <span class="d-inline d-md-none">Team</span>
+                <th class="text-start">
+                    <span class="d-none d-xl-inline">Быстрый круг</span>
+                    <span class="d-inline d-xl-none small">FL</span>
+                </th>
+                <th class="text-start">
+                    <span class="d-none d-xl-inline">Команда</span>
+                    <span class="d-inline d-xl-none small">Team</span>
                 </th>
             </tr>
         </thead>
         <tbody>
             {% for res in result %}
             <tr class="text-center">
-                <td class="text-muted fw-bold">{{ res.round }}</td>
-                <td>{{ res.date|date:"d.m.Y"|default:"—"}}</td>
+                <td>
+                    <span class="d-none d-xl-inline">{{ res.round }}</span>
+                    <span class="d-inline d-xl-none small">{{ res.round }}</span>
+                </td>
+                <td class="text-start">
+                    <span class="d-none d-xl-inline">{{ res.date|date:"d.m.Y"|default:"—"}}</span>
+                    <span class="d-inline d-xl-none small">{{ res.date|date:"d.m.Y"|default:"—"}}</span>
+                </td>
                 <td class="text-start">
                     <div class="d-flex align-items-center">
                         {% if res.gp_country_flag %}
-                        <img src="{{ res.gp_country_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        <img src="{{ res.gp_country_flag }}" class="nova-flag-circle d-none d-xl-inline-block" alt="flag">
                         {% endif %}
-                        <span class="d-none d-xxl-inline">{{ res.gp_name }}</span>
-                        <span class="d-inline d-xxl-none">{{ res.gp_abbr }}</span>
+                        <span class="d-none d-xl-inline">{{ res.gp_name }}</span>
+                        <span class="d-inline d-xl-none small">{{ res.gp_abbr }}</span>
                     </div>
                 </td>
                 <td class="text-start">
                     <div class="d-flex align-items-center">
                         {% if res.winner_flag %}
-                        <img src="{{ res.winner_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        <img src="{{ res.winner_flag }}" class="nova-flag-circle d-none d-xl-inline-block" alt="flag">
                         {% endif %}
-                        <span class="d-none d-xxl-inline">{{ res.winner }}</span>
-                        <span class="d-inline d-xxl-none">{{ res.winner_abbr }}</span>
+                        <span class="d-none d-xl-inline">{{ res.winner }}</span>
+                        <span class="d-inline d-xl-none small">{{ res.winner_abbr }}</span>
                     </div>
                 </td>
                 <td class="text-start">
                     <div class="d-flex align-items-center">
                         {% if res.pole_flag %}
-                        <img src="{{ res.pole_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        <img src="{{ res.pole_flag }}" class="nova-flag-circle d-none d-xl-inline-block" alt="flag">
                         {% endif %}
-                        <span class="d-none d-xxl-inline">{{ res.pole }}</span>
-                        <span class="d-inline d-xxl-none">{{ res.pole_abbr }}</span>
+                        <span class="d-none d-xl-inline">{{ res.pole }}</span>
+                        <span class="d-inline d-xl-none small">{{ res.pole_abbr }}</span>
                     </div>
                 </td>
                 <td class="text-start">
                     <div class="d-flex align-items-center">
                         {% if res.fl_flag %}
-                        <img src="{{ res.fl_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        <img src="{{ res.fl_flag }}" class="nova-flag-circle d-none d-xl-inline-block" alt="flag">
                         {% endif %}
-                        <span class="d-none d-xxl-inline">{{ res.faster_lap }}</span>
-                        <span class="d-inline d-xxl-none">{{ res.fl_abbr }}</span>
+                        <span class="d-none d-xl-inline">{{ res.faster_lap }}</span>
+                        <span class="d-inline d-xl-none small">{{ res.fl_abbr }}</span>
                     </div>
                 </td>
-                <td class="text-start pe-2">
+                <td class="text-start">
                     <div class="d-flex align-items-center">
                         {% if res.team_flag %}
-                        <img src="{{ res.team_flag }}" class="flag-circle d-none d-sm-inline-block" alt="flag">
+                        <img src="{{ res.team_flag }}" class="nova-flag-circle d-none d-xl-inline-block" alt="flag">
                         {% endif %}
-                        <span class="d-none d-xxl-inline">{{ res.team }}</span>
-                        <span class="d-inline d-xxl-none">{{ res.team_abbr }}</span>
+                        <span class="d-none d-xl-inline">{{ res.team }}</span>
+                        <span class="d-inline d-xl-none small">{{ res.team_abbr }}</span>
                     </div>
                 </td>
             </tr>

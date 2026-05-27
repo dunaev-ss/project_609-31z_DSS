@@ -1,18 +1,14 @@
-.flag-circle {
+.nova-ls-1 {
+  letter-spacing: 1px;
+}
+
+.nova-flag-circle {
     width: 22px;
     height: 22px;
     object-fit: cover;
     border-radius: 50%;
     margin-right: 8px;
-    border: 1px solid #dee2e6;
+    border: 1px solid transparent;
     vertical-align: middle;
     display: inline-block;
-}
-
-.table-nowrap td, .table-nowrap th {
-    white-space: nowrap;
-}
-
-.nova-ls-1 {
-  letter-spacing: 1px;
 }
