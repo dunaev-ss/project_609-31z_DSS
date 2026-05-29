@@ -1,7 +1,9 @@
 from datetime import date
+
 from django.shortcuts import render
 from django.db.models import F, Q, Sum
 from django.db.models.functions import ExtractYear
+
 from f1_project.models import Driver, Team, Standing
 
 def data_analysis(request):

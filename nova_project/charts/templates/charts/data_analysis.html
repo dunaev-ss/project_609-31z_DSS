@@ -9,11 +9,11 @@
 
 <div class="mb-4 d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center gap-3">
     <div class="btn-group">
-        <a class="btn btn-outline-primary px-3 {% if type == 'drivers' %}active{% endif %}" 
+        <a class="btn btn-outline-primary px-3 {% if standings_type == 'drivers' %}active{% endif %}" 
            href="?type=drivers&season_year={{ season_year }}">
             Пилоты
         </a>
-        <a class="btn btn-outline-primary px-3 {% if type == 'teams' %}active{% endif %}"
+        <a class="btn btn-outline-primary px-3 {% if standings_type == 'teams' %}active{% endif %}"
            href="?type=teams&season_year={{ season_year }}">
             Команды
         </a>
@@ -35,9 +35,8 @@
     </form>
 </div>
 
-<!-- Контейнер для графика -->
-<div class="bg-white p-3 border rounded shadow-sm mt-4">
-    <canvas id="analysisChart" width="400" height="180"></canvas>
+<div class="bg-light p-3 border rounded mt-4">
+    <canvas id="analysisChart"></canvas>
 </div>
 
 <!-- Скрытые JSON данные от Django -->
@@ -45,6 +44,7 @@
 {{ chart_data|json_script:"chart-values-data" }}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
 <script>
     const labelsData = JSON.parse(document.getElementById('chart-labels-data').textContent);
@@ -52,30 +52,62 @@
     const standingsType = "{{ standings_type }}";
 
     const ctx = document.getElementById('analysisChart').getContext('2d');
-    
-    const barColor = 'rgba(13, 110, 253, 0.7)';
-    const borderColor = 'rgba(13, 110, 253, 1)';
 
+    Chart.register(ChartDataLabels);
+ 
     new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labelsData,
             datasets: [{
-                label: standingsType === 'drivers' ? 'Очки пилота за сезон' : 'Очки команды за сезон',
                 data: valuesData,
-                backgroundColor: barColor,
-                borderColor: borderColor,
-                borderWidth: 1
+                borderRadius: 8,
             }]
         },
         options: {
             responsive: true,
+            layout: {
+                padding: {
+                    top: 24 
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    displayColors: false,
+                    bodyFont: {
+                        weight: 'bold',
+                    },
+                    callbacks: {
+                        title: function(){
+                            return '';
+                        },
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.parsed.y;
+                            return `${label}: ${value}`;
+                        }
+                    }
+                },
+                datalabels: {
+                    anchor: 'end',
+                    align: 'top',
+                    font: {
+                        weight: 'bold'
+                    },
+                    formatter: function(value) {
+                        return value > 0 ? value : '';
+                    }
+                }
+            },
             scales: {
                 y: {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Очки'
+                        text: 'Количество очков'
                     }
                 }
             }
