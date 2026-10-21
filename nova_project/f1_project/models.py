@@ -87,7 +87,8 @@ class Standing(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Пилот"
     )
-    grd = models.IntegerField(
+    grd = models.CharField(
+        max_length=2,
         verbose_name="Позиция на стартовой решетке"
     )
     pos = models.CharField(
